@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catherine Lyu — Data Science & AI Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FDFDFC;
+  --bg-warm: #F8F6F2;
+  --text: #1C1C1C;
+  --text-body: #333333;
+  --text-muted: #6E6E6E;
+  --text-light: #999999;
+  --accent: #8B2332;
+  --accent-hover: #A52A3A;
+  --link: #1A4B84;
+  --link-hover: #2563A8;
+  --border: #E5E2DC;
+  --border-light: #F0EDE8;
+  --tag-bg: #F3F0EB;
+  --serif: 'Crimson Pro', 'Georgia', serif;
+  --sans: 'Source Sans 3', 'Helvetica Neue', sans-serif;
+  --mono: 'IBM Plex Mono', 'Menlo', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  color: var(--text-body);
+  background: var(--bg);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+a { color: var(--link); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--link-hover); }
+
+/* ── Top Bar ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(253,253,252,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.7rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+.topbar-nav { display: flex; gap: 1.6rem; align-items: center; }
+.topbar-nav a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+  position: relative;
+  padding-bottom: 2px;
+}
+.topbar-nav a:hover { color: var(--text); }
+.topbar-nav a.active {
+  color: var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+}
+
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 24px; height: 18px; position: relative;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 1.5px;
+  background: var(--text); position: absolute; left: 0;
+  transition: all 0.3s;
+}
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 8px; }
+.nav-toggle span:nth-child(3) { top: 16px; }
+
+/* ── Layout ── */
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+/* ── Profile Header ── */
+.profile {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.profile-photo {
+  width: 180px; height: 210px;
+  border-radius: 6px;
+  object-fit: cover;
+  filter: grayscale(5%);
+  border: 1px solid var(--border);
+}
+.profile-photo-placeholder {
+  width: 180px; height: 210px;
+  border-radius: 6px;
+  background: var(--bg-warm);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-light);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+.profile-info h1 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+}
+.profile-info .name-cn {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+.profile-affiliation {
+  font-size: 0.92rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.profile-affiliation strong {
+  font-weight: 600;
+  color: var(--text);
+}
+.profile-links {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem;
+  font-size: 0.82rem;
+  margin-bottom: 1.2rem;
+}
+.profile-links a {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  color: var(--text-muted);
+}
+.profile-links a:hover { color: var(--link); }
+.profile-links svg { width: 14px; height: 14px; flex-shrink: 0; }
+.profile-interests {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+}
+.interest-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--tag-bg);
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+}
+
+/* ── Sections ── */
+.section { margin-bottom: 2.8rem; }
+.section-heading {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+
+/* ── Bio ── */
+.bio p {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.82;
+  color: var(--text-body);
+  margin-bottom: 0.9rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* ── News ── */
+.news-list { list-style: none; }
+.news-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.news-item:last-child { border-bottom: none; }
+.news-date {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--text-light);
+  padding-top: 0.1rem;
+}
+.news-text { color: var(--text-body); }
+.news-text strong { font-weight: 600; color: var(--text); }
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 0.2rem;
+}
+.badge-new { background: #FDECEA; color: var(--accent); }
+.badge-pub { background: #E8F0FE; color: var(--link); }
+
+/* ── Publications ── */
+.pub-list { list-style: none; counter-reset: pub; }
+.pub-item {
+  position: relative;
+  padding: 1rem 0 1rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.pub-item:last-child { border-bottom: none; }
+.pub-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+}
+.pub-authors {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
+}
+.pub-authors .me {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 2px;
+}
+.pub-venue {
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.pub-venue strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+}
+.pub-links {
+  margin-top: 0.4rem;
+  display: flex; gap: 0.6rem;
+}
+.pub-link {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--link);
+  background: var(--tag-bg);
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+  transition: all 0.2s;
+}
+.pub-link:hover {
+  background: var(--link);
+  color: #fff;
+  border-color: var(--link);
+}
+.pub-status {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.pub-status.review { background: #FFF8E1; color: #B8860B; }
+.pub-status.ongoing { background: #E8F5E9; color: #2E7D32; }
+.pub-status.published { background: #E8F0FE; color: var(--link); }
+
+/* ── Education ── */
+.edu-list { list-style: none; }
+.edu-item {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.edu-item:last-child { border-bottom: none; }
+.edu-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.edu-school {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.edu-period {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--text-light);
+}
+.edu-detail {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ── Experience ── */
+.exp-list { list-style: none; }
+.exp-item {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.exp-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.exp-role-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: #FDECEA;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+}
+.exp-period {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--text-light);
+}
+.exp-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  line-height: 1.65;
+}
+
+/* ── Awards ── */
+.award-list { list-style: none; }
+.award-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 0.8rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.88rem;
+  align-items: baseline;
+}
+.award-item:last-child { border-bottom: none; }
+.award-year {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--text-light);
+}
+.award-text { color: var(--text-body); line-height: 1.55; }
+.award-text strong { font-weight: 600; color: var(--text); }
+.award-level {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.08rem 0.4rem;
+  border-radius: 3px;
+  margin-left: 0.3rem;
+  white-space: nowrap;
+}
+.level-gold { background: #FFF8E1; color: #B8860B; }
+.level-silver { background: #F0F0F0; color: #666; }
+.level-bronze { background: #FFF3E0; color: #A0522D; }
+
+/* ── Skills ── */
+.skills-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.88rem;
+  align-items: baseline;
+}
+.skills-row:last-child { border-bottom: none; }
+.skills-label {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.skills-value {
+  color: var(--text-muted);
+  display: flex; flex-wrap: wrap; gap: 0.3rem;
+}
+.s-tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  background: var(--tag-bg);
+  color: var(--text-muted);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+}
+
+/* ── Service ── */
+.service-list { list-style: none; }
+.service-item {
+  padding: 0.4rem 0;
+  font-size: 0.88rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  display: flex; gap: 0.5rem;
+}
+.service-item::before {
+  content: '\2013';
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.page-footer {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  color: var(--text-light);
+}
+.page-footer a { color: var(--text-muted); }
+
+/* ── Animations ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  html { font-size: 16px; }
+  .nav-toggle { display: block; }
+  .topbar-nav {
+    position: fixed; top: 0; right: -260px;
+    width: 260px; height: 100vh;
+    background: var(--bg);
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-left: 1px solid var(--border);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.06);
+    transition: right 0.35s ease;
+    z-index: 200;
+  }
+  .topbar-nav.open { right: 0; }
+  .profile {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .profile-photo, .profile-photo-placeholder {
+    width: 140px; height: 170px;
+    margin: 0 auto;
+  }
+  .profile-links { justify-content: center; }
+  .profile-interests { justify-content: center; }
+  .page { padding: 2rem 1.2rem 3rem; }
+  .award-item { grid-template-columns: 1fr; gap: 0.15rem; }
+  .skills-row { grid-template-columns: 1fr; gap: 0.2rem; }
+  .news-item { grid-template-columns: 1fr; gap: 0.2rem; }
+  .exp-top { flex-direction: column; }
+  .page-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#" class="topbar-name">Catherine Lyu</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="topbar-nav">
+      <a href="#bio">About</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#awards">Awards</a>
+      <a href="#skills">Skills</a>
+      <a href="#misc">Misc</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- Profile Header -->
+  <div class="profile fade-in">
+    <div>
+      <!-- Replace with your photo: <img class="profile-photo" src="assets/photo.jpg" alt="Catherine Lyu"> -->
+      <img class="profile-photo" src="1.jpg" alt="Catherine Lyu">
+    </div>
+    <div class="profile-info">
+      <h1>Catherine Lyu</h1>
+      <div class="name-cn">吕维懿(Weiyi Lyu)</div>
+      <div class="profile-affiliation">
+        Undergraduate Researcher<br>
+        <strong>Minzu University of China</strong> &amp; <strong>City University of Macau</strong><br>
+        Data Science and Big Data Technology
+      </div>
+      <div class="profile-links">
+        <a href="mailto:catherineeeelwy@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          catherineeeelwy@gmail.com
+        </a>
+        <a href="https://github.com/Catherineeeelll" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <!-- Uncomment & add your links -->
+        <!-- <a href="#">Google Scholar</a> -->
+        <!-- <a href="#">Semantic Scholar</a> -->
+      </div>
+      <div class="profile-interests">
+        <span class="interest-tag">Computer Vision</span>
+        <span class="interest-tag">Medical Image Analysis</span>
+        <span class="interest-tag">Multimodal Learning</span>
+        <span class="interest-tag">Retrieval-Augmented Generation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bio -->
+  <div class="section fade-in" id="bio">
+    <h2 class="section-heading">About Me</h2>
+    <div class="bio">
+      <p>Hi! I'm an undergraduate student in Data Science and Big Data Technology, studying through the joint program between <a href="https://www.muc.edu.cn/" target="_blank">Minzu University of China</a> and <a href="https://www.cityu.edu.mo/" target="_blank">City University of Macau</a>, currently conducting research at the <strong>General & Reliable Intelligence (GRIN) Lab</strong> at CityU Macau.</p>
+  
+      <p>My research interests lie at the intersection of <strong>computer vision</strong> and <strong>medical artificial intelligence</strong>. I am particularly interested in developing vision-language models that can better understand medical images in clinically meaningful ways and integrate visual reasoning with diagnostic workflows.</p>
+  
+      <p>At present, I am working on anatomy-aware hierarchical reasoning approaches for automated radiology report generation. Previously, I have explored skeleton-guided visual understanding combined with retrieval-augmented generation for healthcare scenarios, as well as hybrid metaheuristic methods for combinatorial optimization problems.</p>
+  
+      <p>I am actively looking for research opportunities (RA/ intern / master-leading to PhD) in computer vision, medical multimodal learning, and vision-language models, with the goal of applying for PhD programs starting in Fall 2027. Feel free to reach out if our interests align — I'm always happy to chat about potential collaborations.</p>
+    </div>
+  </div>
+
+  <!-- News -->
+  <div class="section fade-in" id="news">
+    <h2 class="section-heading">News</h2>
+    <ul class="news-list">
+      <li class="news-item">
+        <span class="news-date">2025</span>
+        <span class="news-text"><span class="badge badge-new">New</span> Our paper on anatomy-aware radiology report generation is <strong>in preparation</strong></span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">2026</span>
+        <span class="news-text"><span class="badge badge-new">New</span> Paper on skeleton-guided hand hygiene assessment submitted to <strong>ICMR 2026</strong> (under review).</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Publications -->
+  <div class="section fade-in" id="publications">
+    <h2 class="section-heading">Publications</h2>
+    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem; font-style:italic;">
+      (* equal contribution &middot; <span style="text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px;">underline</span> = myself)
+    </p>
+    <ol class="pub-list">
+
+      <li class="pub-item">
+        <div class="pub-title">
+          DyG-R: Dynamic Anatomy-Guided Graph Reasoning with Structure-Aware Retrieval for Faithful Radiology Report Generation
+          <span class="pub-status ongoing">In Prep</span>
+        </div>
+        <div class="pub-authors">
+          <span class="me">Weiyi Lv (Catherine Lyu)</span>, et al.
+        </div>
+        <div class="pub-venue">Thesis in Preparation, 2026</div>
+      </li>
+
+      <li class="pub-item">
+        <div class="pub-title">
+          HH-Track: Skeleton-Guided Visual Understanding with Prototype-Anchored RAG for Hand Hygiene Assessment
+          <span class="pub-status review">Under Review</span>
+        </div>
+        <div class="pub-authors">
+          Dongxiao Li, Ruinan Chen, <span class="me">Weiyi Lv (Catherine Lyu)</span>, et al.
+        </div>
+        <div class="pub-venue">
+          <strong>ICMR 2026</strong> &mdash; ACM International Conference on Multimedia Retrieval
+        </div>
+      </li>
+
+      <li class="pub-item">
+        <div class="pub-title">
+          A Method for FlowShop Scheduling Problem by Using Hybrid Ant Algorithm
+          <span class="pub-status published">Published</span>
+        </div>
+        <div class="pub-authors">
+          Haijun Liu*, <span class="me">Weiyi Lv (Catherine Lyu)</span>*, et al.
+        </div>
+        <div class="pub-venue">
+          <strong>EAI DIONE 2024</strong> &mdash; 5th EAI Intl. Conference on Data and Information in Online Environments
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="#">PDF</a>
+          <!-- <a class="pub-link" href="#">Code</a> -->
+        </div>
+      </li>
+
+    </ol>
+  </div>
+
+  <!-- Research Experience -->
+  <div class="section fade-in" id="experience">
+    <h2 class="section-heading">Research Experience</h2>
+    <ul class="exp-list">
+      <li class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">Guangzhou Key Laboratory &mdash; Health Perception &amp; Smart Home Hospital Ward</span>
+          <span class="exp-period">2025</span>
+        </div>
+        <div style="margin-top:0.2rem;">
+          <span class="exp-role-tag">Research Assistant</span>
+        </div>
+        <div class="exp-desc">
+          Conducted data collection, cleaning, and analysis for health perception research in smart home and hospital ward scenarios. Assisted in building and validating data support workflows for smart healthcare perception systems.
+        </div>
+      </li>
+      <li class="exp-item">
+        <div class="exp-top">
+          <span class="exp-title">National Key R&amp;D Program &mdash; HIV Source Tracing via Multi-Modal Network Fusion</span>
+          <span class="exp-period">2024</span>
+        </div>
+        <div style="margin-top:0.2rem;">
+          <span class="exp-role-tag">Research Assistant</span>
+        </div>
+        <div class="exp-desc">
+          Supported theoretical research and experimental analysis for HIV source tracing based on multi-modal network fusion methods. Assisted in data processing, model experimentation, and precision intervention research for disease transmission analysis.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Awards -->
+  <div class="section fade-in" id="awards">
+    <h2 class="section-heading">Selected Awards</h2>
+    <ul class="award-list">
+      <li class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text"><strong>National Gold Award</strong>, China Intl. College Students' Innovation Competition (CICSIC) <span class="award-level level-gold">Gold</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text"><strong>First Prize</strong> (Grand Final), 13th Asia-Pacific University Market Research Competition <span class="award-level level-gold">1st</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text"><strong>Grand Prize</strong> (Grand Final), 10th GBA IT Application System Development Competition <span class="award-level level-gold">Grand</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2025</span>
+        <span class="award-text"><strong>National Bronze</strong>, "Challenge Cup" Undergraduate Academic Science &amp; Technology Contest <span class="award-level level-bronze">Bronze</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2024</span>
+        <span class="award-text"><strong>National First Prize</strong>, 12th National College Student Digital Media Technology Competition <span class="award-level level-gold">1st</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2024</span>
+        <span class="award-text"><strong>Provincial Second Prize</strong>, "National Talent Cup" Foreign Language Proficiency Competition <span class="award-level level-silver">2nd</span></span>
+      </li>
+      <li class="award-item">
+        <span class="award-year">2023</span>
+        <span class="award-text"><strong>National Second Prize</strong>, Chuang Yan Bei College Student English Writing Competition <span class="award-level level-silver">2nd</span></span>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- Technical Skills -->
+  <div class="section fade-in" id="skills">
+    <h2 class="section-heading">Technical Skills</h2>
+    <div>
+      <div class="skills-row">
+        <span class="skills-label">Programming</span>
+        <span class="skills-value">
+          <span class="s-tag">Python</span>
+          <span class="s-tag">C/C++</span>
+          <span class="s-tag">MySQL</span>
+          <span class="s-tag">HTML</span>
+          <span class="s-tag">MATLAB</span>
+          <span class="s-tag">Linux</span>
+        </span>
+      </div>
+      <div class="skills-row">
+        <span class="skills-label">Frameworks</span>
+        <span class="skills-value">
+          <span class="s-tag">PyTorch</span>
+          <span class="s-tag">OpenCV</span>
+          <span class="s-tag">ECharts</span>
+          <span class="s-tag">Blender</span>
+          <span class="s-tag">Jupyter</span>
+          <span class="s-tag">Git</span>
+          <span class="s-tag">LaTeX</span>
+          <span class="s-tag">Microsoft Office</span>
+        </span>
+      </div>
+      <div class="skills-row">
+        <span class="skills-label">Languages</span>
+        <span class="skills-value">
+          <span class="s-tag">Mandarin (Native)</span>
+          <span class="s-tag">English (CET-6)</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Service -->
+  <div class="section fade-in" id="misc">
+    <h2 class="section-heading">Service &amp; Activities</h2>
+    <ul class="service-list">
+      <li class="service-item">Delegate, <strong>9th Yenching Global Symposium</strong>, Yenching Academy of Peking University, 2025</li>
+      <li class="service-item">Volunteer, <strong>15th National Games of China</strong>, 2025</li>
+      <li class="service-item">Member, competition operation team, <strong>12th National Ethnic Traditional Sports Games</strong></li>
+      <li class="service-item">Minister, Student Union, Minzu University of China</li>
+      <li class="service-item">Volunteer, China Daily outreach series &amp; Hainan Unicom Cup Lingshui Half Marathon, 2024</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <span>&copy; 2025 Catherine Lyu. Last updated: March 2026.</span>
+  <span>Built for <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></span>
+</footer>
+
+<script>
+// Mobile nav
+const toggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.topbar-nav');
+toggle.addEventListener('click', () => nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Active nav highlight
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.topbar-nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
