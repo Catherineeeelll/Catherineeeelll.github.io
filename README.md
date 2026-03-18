@@ -10,6 +10,8 @@ This site is hosted via [GitHub Pages](https://pages.github.com/). Simply push t
 
 > **https://catherineeeelll.github.io**
 
+> You can switch languages ​​in the upper right corner, and it will remember your choices.
+
 ## Structure
 
 ```
@@ -25,6 +27,7 @@ This site is hosted via [GitHub Pages](https://pages.github.com/). Simply push t
 - **Photo**: Replace `assets/photo.jpg` and uncomment the `<img>` tag in `index.html`.
 - **Publications**: Update author lists, links, and status badges as papers progress.
 - **Links**: Uncomment and fill in Google Scholar / ORCID links in the profile section.
+- **Language**: This version only offers two languages; you can simply change the text. 
 
 ## License
 
