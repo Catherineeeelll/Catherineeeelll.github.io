@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catherine Lyu — Data Science & AI Researcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #FDFDFC;
@@ -22,14 +22,13 @@
   --border-light: #F0EDE8;
   --tag-bg: #F3F0EB;
   --serif: 'Crimson Pro', 'Georgia', serif;
+  --serif-zh: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   --sans: 'Source Sans 3', 'Helvetica Neue', sans-serif;
   --mono: 'IBM Plex Mono', 'Menlo', monospace;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { font-size: 17px; scroll-behavior: smooth; }
-
 body {
   font-family: var(--sans);
   color: var(--text-body);
@@ -37,11 +36,14 @@ body {
   line-height: 1.72;
   -webkit-font-smoothing: antialiased;
 }
-
 ::selection { background: var(--accent); color: #fff; }
-
 a { color: var(--link); text-decoration: none; transition: color 0.2s; }
 a:hover { color: var(--link-hover); }
+
+/* When in Chinese mode, use Chinese serif for bio */
+html[lang="zh"] .bio p {
+  font-family: var(--serif-zh);
+}
 
 /* ── Top Bar ── */
 .topbar {
@@ -63,19 +65,54 @@ a:hover { color: var(--link-hover); }
   color: var(--text);
   text-decoration: none;
 }
+.topbar-right {
+  display: flex; align-items: center; gap: 1.6rem;
+}
 .topbar-nav { display: flex; gap: 1.6rem; align-items: center; }
 .topbar-nav a {
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--text-muted);
   letter-spacing: 0.01em;
-  position: relative;
   padding-bottom: 2px;
 }
 .topbar-nav a:hover { color: var(--text); }
 .topbar-nav a.active {
   color: var(--accent);
   border-bottom: 1.5px solid var(--accent);
+}
+
+/* Language Toggle */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.74rem;
+  font-family: var(--mono);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.lang-btn {
+  padding: 0.25rem 0.55rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  transition: all 0.2s;
+  line-height: 1.3;
+}
+.lang-btn:first-child { border-right: 1px solid var(--border); }
+.lang-btn.active {
+  background: var(--text);
+  color: var(--bg);
+}
+.lang-btn:hover:not(.active) {
+  background: var(--tag-bg);
 }
 
 .nav-toggle {
@@ -481,8 +518,8 @@ a:hover { color: var(--link-hover); }
   html { font-size: 16px; }
   .nav-toggle { display: block; }
   .topbar-nav {
-    position: fixed; top: 0; right: -260px;
-    width: 260px; height: 100vh;
+    position: fixed; top: 0; right: -280px;
+    width: 280px; height: 100vh;
     background: var(--bg);
     flex-direction: column;
     justify-content: center;
@@ -494,6 +531,7 @@ a:hover { color: var(--link-hover); }
     z-index: 200;
   }
   .topbar-nav.open { right: 0; }
+  .topbar-right { gap: 1rem; }
   .profile {
     grid-template-columns: 1fr;
     text-align: center;
@@ -519,17 +557,23 @@ a:hover { color: var(--link-hover); }
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#" class="topbar-name">Catherine Lyu</a>
-    <button class="nav-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="topbar-nav">
-      <a href="#bio">About</a>
-      <a href="#publications">Publications</a>
-      <a href="#experience">Experience</a>
-      <a href="#awards">Awards</a>
-      <a href="#skills">Skills</a>
-      <a href="#misc">Misc</a>
-    </nav>
+    <div class="topbar-right">
+      <nav class="topbar-nav">
+        <a href="#bio" data-en="Bio" data-zh="简介">About</a>
+        <a href="#publications" data-en="Publications" data-zh="发表论文">Publications</a>
+        <a href="#experience" data-en="Experience" data-zh="科研经历">Experience</a>
+        <a href="#awards" data-en="Awards" data-zh="获奖">Awards</a>
+        <a href="#skills" data-en="Skills" data-zh="技能">Skills</a>
+        <a href="#misc" data-en="Misc" data-zh="其他">Misc</a>
+      </nav>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -538,13 +582,13 @@ a:hover { color: var(--link-hover); }
   <!-- Profile Header -->
   <div class="profile fade-in">
     <div>
-      <!-- Replace with your photo: <img class="profile-photo" src="assets/photo.jpg" alt="Catherine Lyu"> -->
+      <!-- Replace with: <img class="profile-photo" src="assets/photo.jpg" alt="Catherine Lyu"> -->
       <img class="profile-photo" src="assets/photo.jpg" alt="Catherine Lyu">
     </div>
     <div class="profile-info">
       <h1>Catherine Lyu</h1>
       <div class="name-cn">吕维懿 (Weiyi Lyu)</div>
-      <div class="profile-affiliation">
+      <div class="profile-affiliation" data-en="Undergraduate Researcher<br><strong>Minzu University of China</strong> &amp; <strong>City University of Macau</strong><br>Data Science and Big Data Technology" data-zh="本科生研究者<br><strong>中央民族大学</strong> &amp; <strong>澳门城市大学</strong><br>数据科学与大数据技术">
         Undergraduate Researcher<br>
         <strong>Minzu University of China</strong> &amp; <strong>City University of Macau</strong><br>
         Data Science and Big Data Technology
@@ -558,125 +602,128 @@ a:hover { color: var(--link-hover); }
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
           GitHub
         </a>
-        <!-- Uncomment & add your links -->
-        <!-- <a href="#">Google Scholar</a> -->
-        <!-- <a href="#">Semantic Scholar</a> -->
       </div>
       <div class="profile-interests">
-        <span class="interest-tag">Computer Vision</span>
-        <span class="interest-tag">Medical Image Analysis</span>
-        <span class="interest-tag">Multimodal Learning</span>
-        <span class="interest-tag">Retrieval-Augmented Generation</span>
+        <span class="interest-tag" data-en="Computer Vision" data-zh="计算机视觉">Computer Vision</span>
+        <span class="interest-tag" data-en="Medical Image Analysis" data-zh="医学图像分析">Medical Image Analysis</span>
+        <span class="interest-tag" data-en="Multimodal Learning" data-zh="多模态学习">Multimodal Learning</span>
+        <span class="interest-tag" data-en="Retrieval-Augmented Generation" data-zh="检索增强生成">Retrieval-Augmented Generation</span>
       </div>
     </div>
   </div>
 
   <!-- Bio -->
   <div class="section fade-in" id="bio">
-    <h2 class="section-heading">About Me</h2>
+    <h2 class="section-heading" data-en="About Me" data-zh="关于我">About Me</h2>
     <div class="bio">
-      <p>Hi! I'm an undergraduate student in Data Science and Big Data Technology, studying through the joint program between <a href="https://www.muc.edu.cn/" target="_blank">Minzu University of China</a> and <a href="https://www.cityu.edu.mo/" target="_blank">City University of Macau</a>, currently conducting research at the <strong>General & Reliable Intelligence (GRIN) Lab</strong> at CityU Macau.</p>
-  
-      <p>My research interests lie at the intersection of <strong>computer vision</strong> and <strong>medical artificial intelligence</strong>. I am particularly interested in developing vision-language models that can better understand medical images in clinically meaningful ways and integrate visual reasoning with diagnostic workflows.</p>
-  
-      <p>At present, I am working on anatomy-aware hierarchical reasoning approaches for automated radiology report generation. Previously, I have explored skeleton-guided visual understanding combined with retrieval-augmented generation for healthcare scenarios, as well as hybrid metaheuristic methods for combinatorial optimization problems.</p>
-  
-      <p>I am actively looking for research opportunities (RA/ intern / master-leading to PhD) in computer vision, medical multimodal learning, and vision-language models, with the goal of applying for PhD programs starting in Fall 2027. Feel free to reach out if our interests align — I'm always happy to chat about potential collaborations.</p>
+      <p data-en="Hi! I'm an undergraduate student in Data Science and Big Data Technology, studying through the joint program between <a href='https://www.muc.edu.cn/' target='_blank'>Minzu University of China</a> and <a href='https://www.cityu.edu.mo/' target='_blank'>City University of Macau</a> , currently conducting research at the <strong>General & Reliable Intelligence (GRIN) Lab</strong> at CityU Macau."
+         data-zh="您好！我是<a href='https://www.muc.edu.cn/' target='_blank'>中央民族大学</a>和<a href='https://www.cityu.edu.mo/' target='_blank'>澳门城市大学</a>联合培养的本科生，专业为数据科学与大数据技术，现在在澳门城市大学的通用可信智能实验室（GRIN Lab）进行研究。">
+        Hi! I'm an undergraduate student in Data Science and Big Data Technology, studying through the joint program between <a href="https://www.muc.edu.cn/" target="_blank">Minzu University of China</a> and <a href="https://www.cityu.edu.mo/" target="_blank">City University of Macau</a>, currently conducting research at the <strong>General & Reliable Intelligence (GRIN) Lab</strong> at CityU Macau.
+      </p>
+      <p data-en="My research interests lie at the intersection of <strong>computer vision</strong> and <strong>medical artificial intelligence</strong>. I am particularly interested in developing vision-language models that can better understand medical images in clinically meaningful ways and integrate visual reasoning with diagnostic workflows."
+         data-zh="对于计算机视觉和医学人工智能的交叉领域我很感兴趣。尤其致力于开发能够以临床意义的方式更好地理解医学图像，并将视觉推理与诊断工作流程相结合的视觉语言模型。">
+        My research interests lie at the intersection of <strong>computer vision</strong> and <strong>medical artificial intelligence</strong>. I am particularly interested in developing vision-language models that can better understand medical images in clinically meaningful ways and integrate visual reasoning with diagnostic workflows.
+      </p>
+      <p data-en="At present, I am working on anatomy-aware hierarchical reasoning approaches for automated radiology report generation. Previously, I have explored skeleton-guided visual understanding combined with retrieval-augmented generation for healthcare scenarios, as well as hybrid metaheuristic methods for combinatorial optimization problems."
+         data-zh="目前，我正在研究解剖感知的层次推理方法，用于自动化放射学报告生成。此前，我探索了基于骨架引导的视觉理解与检索增强生成在医疗场景中的应用，以及用于组合优化问题的混合启发式算法。">
+        At present, I am working on anatomy-aware hierarchical reasoning approaches for automated radiology report generation. Previously, I have explored skeleton-guided visual understanding combined with retrieval-augmented generation for healthcare scenarios, as well as hybrid metaheuristic methods for combinatorial optimization problems.
+      </p>
+      <p data-en="I am actively looking for research opportunities (RA/ intern / master-leading to PhD) in computer vision, medical multimodal learning, and vision-language models, with the goal of applying for Master/PhD programs starting in Fall 2027. Feel free to reach out if our interests align — I'm always happy to chat about potential collaborations."
+         data-zh="我也在积极寻找计算机视觉、医学多模态学习和视觉语言模型领域的研究机会（研究助理/实习生/硕士进阶博士），目标是申请2027年秋季入学的硕士/博士项目。如果我们的研究兴趣相符，欢迎随时联系我——我非常乐意探讨潜在的合作机会。">
+        I am actively looking for research opportunities (RA/ intern / master-leading to PhD) in computer vision, medical multimodal learning, and vision-language models, with the goal of applying for Master/PhD programs starting in Fall 2027. Feel free to reach out if our interests align — I'm always happy to chat about potential collaborations.
+      </p>
     </div>
   </div>
 
   <!-- News -->
   <div class="section fade-in" id="news">
-    <h2 class="section-heading">News</h2>
+    <h2 class="section-heading" data-en="News" data-zh="最新动态">News</h2>
     <ul class="news-list">
       <li class="news-item">
         <span class="news-date">2026</span>
-        <span class="news-text"><span class="badge badge-new">New</span> Our paper on anatomy-aware radiology report generation is <strong>in preparation</strong></span>
+        <span class="news-text" data-en="<span class='badge badge-new'>New</span> Our paper on anatomy-aware radiology report generation is <strong>in preparation</strong>." data-zh="<span class='badge badge-new'>新</span> 关于解剖感知放射学报告生成的论文<strong>准备中</strong>。"><span class="badge badge-new">New</span> Our paper on anatomy-aware radiology report generation is <strong>in preparation</strong>.</span>
       </li>
       <li class="news-item">
         <span class="news-date">2026</span>
-        <span class="news-text"><span class="badge badge-new">New</span> Paper on skeleton-guided hand hygiene assessment submitted to <strong>ICMR 2026</strong> (under review).</span>
+        <span class="news-text" data-en="<span class='badge badge-new'>New</span> Paper on skeleton-guided hand hygiene assessment submitted to <strong>ICMR 2026</strong> (under review)." data-zh="<span class='badge badge-new'>新</span> 骨骼引导手卫生评估论文已投稿 <strong>ICMR 2026</strong>（审稿中）。"><span class="badge badge-new">New</span> Paper on skeleton-guided hand hygiene assessment submitted to <strong>ICMR 2026</strong> (under review).</span>
       </li>
     </ul>
   </div>
 
   <!-- Publications -->
   <div class="section fade-in" id="publications">
-    <h2 class="section-heading">Publications</h2>
-    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem; font-style:italic;">
+    <h2 class="section-heading" data-en="Publications" data-zh="发表论文">Publications</h2>
+    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem; font-style:italic;"
+       data-en="(* equal contribution &middot; <span style='text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px;'>underline</span> = myself)"
+       data-zh="(* 共同贡献 &middot; <span style='text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px;'>下划线</span> = 本人)">
       (* equal contribution &middot; <span style="text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px;">underline</span> = myself)
     </p>
     <ol class="pub-list">
-
       <li class="pub-item">
         <div class="pub-title">
           DyG-R: Dynamic Anatomy-Guided Graph Reasoning with Structure-Aware Retrieval for Faithful Radiology Report Generation
-          <span class="pub-status ongoing">In Prep</span>
+          <span class="pub-status ongoing" data-en="In Prep" data-zh="准备中">In Prep</span>
         </div>
         <div class="pub-authors">
-          <span class="me">Weiyi Lv (Catherine Lyu)</span>, et al.
+          <span class="me">Weiyi Lyu</span>, et al.
         </div>
-        <div class="pub-venue">Thesis in Preparation, 2026</div>
+        <div class="pub-venue" data-en="Thesis in Preparation, 2026" data-zh="论文准备中，2026">Thesis in Preparation, 2026</div>
       </li>
-
       <li class="pub-item">
         <div class="pub-title">
           HH-Track: Skeleton-Guided Visual Understanding with Prototype-Anchored RAG for Hand Hygiene Assessment
-          <span class="pub-status review">Under Review</span>
+          <span class="pub-status review" data-en="Under Review" data-zh="审稿中">Under Review</span>
         </div>
         <div class="pub-authors">
-          Dongxiao Li, Ruinan Chen, <span class="me">Weiyi Lv (Catherine Lyu)</span>, et al.
+          Dongxiao Li, Ruinan Chen, <span class="me">Weiyi Lyu</span>, et al.
         </div>
         <div class="pub-venue">
           <strong>ICMR 2026</strong> &mdash; ACM International Conference on Multimedia Retrieval
         </div>
       </li>
-
       <li class="pub-item">
         <div class="pub-title">
           A Method for FlowShop Scheduling Problem by Using Hybrid Ant Algorithm
-          <span class="pub-status published">Published</span>
+          <span class="pub-status published" data-en="Published" data-zh="已发表">Published</span>
         </div>
         <div class="pub-authors">
-          Haijun Liu*, <span class="me">Weiyi Lv (Catherine Lyu)</span>*, et al.
+          Haijun Liu*, <span class="me">Weiyi Lv</span>*, et al.
         </div>
         <div class="pub-venue">
           <strong>EAI DIONE 2024</strong> &mdash; 5th EAI Intl. Conference on Data and Information in Online Environments
         </div>
         <div class="pub-links">
           <a class="pub-link" href="#">PDF</a>
-          <!-- <a class="pub-link" href="#">Code</a> -->
         </div>
       </li>
-
     </ol>
   </div>
 
   <!-- Research Experience -->
   <div class="section fade-in" id="experience">
-    <h2 class="section-heading">Research Experience</h2>
+    <h2 class="section-heading" data-en="Research Experience" data-zh="科研经历">Research Experience</h2>
     <ul class="exp-list">
       <li class="exp-item">
         <div class="exp-top">
-          <span class="exp-title">Guangzhou Key Laboratory &mdash; Health Perception &amp; Smart Home Hospital Ward</span>
+          <span class="exp-title" data-en="Guangzhou Key Laboratory &mdash; Health Perception &amp; Smart Home Hospital Ward" data-zh="广州市重点实验室 &mdash; 健康感知与智慧家居病房">Guangzhou Key Laboratory &mdash; Health Perception &amp; Smart Home Hospital Ward</span>
           <span class="exp-period">2025</span>
         </div>
         <div style="margin-top:0.2rem;">
-          <span class="exp-role-tag">Research Assistant</span>
+          <span class="exp-role-tag" data-en="Research Assistant" data-zh="科研助理">Research Assistant</span>
         </div>
-        <div class="exp-desc">
+        <div class="exp-desc" data-en="Conducted data collection, cleaning, and analysis for health perception research in smart home and hospital ward scenarios. Assisted in building and validating data support workflows for smart healthcare perception systems." data-zh="负责智慧家居和医院病房场景中健康感知研究的数据采集、清洗和分析工作。协助构建和验证智慧医疗感知系统的数据支持工作流。">
           Conducted data collection, cleaning, and analysis for health perception research in smart home and hospital ward scenarios. Assisted in building and validating data support workflows for smart healthcare perception systems.
         </div>
       </li>
       <li class="exp-item">
         <div class="exp-top">
-          <span class="exp-title">National Key R&amp;D Program &mdash; HIV Source Tracing via Multi-Modal Network Fusion</span>
+          <span class="exp-title" data-en="National Key R&amp;D Program &mdash; HIV Source Tracing via Multi-Modal Network Fusion" data-zh="国家重点研发计划 &mdash; 基于多模态网络融合的HIV溯源与精准干预">National Key R&amp;D Program &mdash; HIV Source Tracing via Multi-Modal Network Fusion</span>
           <span class="exp-period">2024</span>
         </div>
         <div style="margin-top:0.2rem;">
-          <span class="exp-role-tag">Research Assistant</span>
+          <span class="exp-role-tag" data-en="Research Assistant" data-zh="科研助理">Research Assistant</span>
         </div>
-        <div class="exp-desc">
+        <div class="exp-desc" data-en="Supported theoretical research and experimental analysis for HIV source tracing based on multi-modal network fusion methods. Assisted in data processing, model experimentation, and precision intervention research for disease transmission analysis." data-zh="支持基于多模态网络融合方法的HIV溯源理论研究与实验分析。协助数据处理、模型实验以及疾病传播分析的精准干预研究。">
           Supported theoretical research and experimental analysis for HIV source tracing based on multi-modal network fusion methods. Assisted in data processing, model experimentation, and precision intervention research for disease transmission analysis.
         </div>
       </li>
@@ -685,57 +732,55 @@ a:hover { color: var(--link-hover); }
 
   <!-- Awards -->
   <div class="section fade-in" id="awards">
-    <h2 class="section-heading">Selected Awards</h2>
+    <h2 class="section-heading" data-en="Selected Awards" data-zh="所获荣誉">Selected Awards</h2>
     <ul class="award-list">
       <li class="award-item">
         <span class="award-year">2025</span>
-        <span class="award-text"><strong>National Gold Award</strong>, China Intl. College Students' Innovation Competition (CICSIC) <span class="award-level level-gold">Gold</span></span>
+        <span class="award-text" data-en="<strong>National Gold Award</strong>, China Intl. College Students' Innovation Competition (CICSIC) <span class='award-level level-gold'>Gold</span>" data-zh="中国国际大学生创新大赛（CICSIC）<strong>全国金奖</strong> <span class='award-level level-gold'>金奖</span>"><strong>National Gold Award</strong>, China Intl. College Students' Innovation Competition (CICSIC) <span class="award-level level-gold">Gold</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2025</span>
-        <span class="award-text"><strong>First Prize</strong> (Grand Final), 13th Asia-Pacific University Market Research Competition <span class="award-level level-gold">1st</span></span>
+        <span class="award-text" data-en="<strong>First Prize</strong> (Grand Final), 13th Asia-Pacific University Market Research Competition <span class='award-level level-gold'>1st</span>" data-zh="第13届亚太大学生市场调研大赛（总决赛）<strong>一等奖</strong> <span class='award-level level-gold'>一等</span>"><strong>First Prize</strong> (Grand Final), 13th Asia-Pacific University Market Research Competition <span class="award-level level-gold">1st</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2025</span>
-        <span class="award-text"><strong>Grand Prize</strong> (Grand Final), 10th GBA IT Application System Development Competition <span class="award-level level-gold">Grand</span></span>
+        <span class="award-text" data-en="<strong>Grand Prize</strong> (Grand Final), 10th GBA IT Application System Development Competition <span class='award-level level-gold'>Grand</span>" data-zh="第10届粤港澳大湾区IT应用系统开发大赛（总决赛）<strong>特等奖</strong> <span class='award-level level-gold'>特等</span>"><strong>Grand Prize</strong> (Grand Final), 10th GBA IT Application System Development Competition <span class="award-level level-gold">Grand</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2025</span>
-        <span class="award-text"><strong>National Bronze</strong>, "Challenge Cup" Undergraduate Academic Science &amp; Technology Contest <span class="award-level level-bronze">Bronze</span></span>
+        <span class="award-text" data-en="<strong>National Bronze</strong>, &ldquo;Challenge Cup&rdquo; Undergraduate Academic Science &amp; Technology Contest <span class='award-level level-bronze'>Bronze</span>" data-zh="“挑战杯”大学生课外学术科技作品竞赛<strong>全国铜奖</strong> <span class='award-level level-bronze'>铜奖</span>"><strong>National Bronze</strong>, &ldquo;Challenge Cup&rdquo; Undergraduate Academic Science &amp; Technology Contest <span class="award-level level-bronze">Bronze</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2024</span>
-        <span class="award-text"><strong>National First Prize</strong>, 12th National College Student Digital Media Technology Competition <span class="award-level level-gold">1st</span></span>
+        <span class="award-text" data-en="<strong>National First Prize</strong>, 12th National College Student Digital Media Technology Competition <span class='award-level level-gold'>1st</span>" data-zh="第12届全国大学生数字媒体科技作品及创意竞赛<strong>全国一等奖</strong> <span class='award-level level-gold'>一等</span>"><strong>National First Prize</strong>, 12th National College Student Digital Media Technology Competition <span class="award-level level-gold">1st</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2024</span>
-        <span class="award-text"><strong>Provincial Second Prize</strong>, "National Talent Cup" Foreign Language Proficiency Competition <span class="award-level level-silver">2nd</span></span>
+        <span class="award-text" data-en="<strong>Provincial Second Prize</strong>, &ldquo;National Talent Cup&rdquo; Foreign Language Proficiency Competition <span class='award-level level-silver'>2nd</span>" data-zh="“外研社·国才杯”全国大学生外语能力竞赛<strong>省级二等奖</strong> <span class='award-level level-silver'>二等</span>"><strong>Provincial Second Prize</strong>, &ldquo;National Talent Cup&rdquo; Foreign Language Proficiency Competition <span class="award-level level-silver">2nd</span></span>
       </li>
       <li class="award-item">
         <span class="award-year">2023</span>
-        <span class="award-text"><strong>National Second Prize</strong>, Chuang Yan Bei College Student English Writing Competition <span class="award-level level-silver">2nd</span></span>
+        <span class="award-text" data-en="<strong>National Second Prize</strong>, Chuang Yan Bei College Student English Writing Competition <span class='award-level level-silver'>2nd</span>" data-zh="创研杯全国大学生英语写作大赛<strong>全国二等奖</strong> <span class='award-level level-silver'>二等</span>"><strong>National Second Prize</strong>, Chuang Yan Bei College Student English Writing Competition <span class="award-level level-silver">2nd</span></span>
       </li>
     </ul>
   </div>
 
-
   <!-- Technical Skills -->
   <div class="section fade-in" id="skills">
-    <h2 class="section-heading">Technical Skills</h2>
+    <h2 class="section-heading" data-en="Technical Skills" data-zh="技术能力">Technical Skills</h2>
     <div>
       <div class="skills-row">
-        <span class="skills-label">Programming</span>
+        <span class="skills-label" data-en="Programming" data-zh="编程语言">Programming</span>
         <span class="skills-value">
           <span class="s-tag">Python</span>
           <span class="s-tag">C/C++</span>
           <span class="s-tag">MySQL</span>
           <span class="s-tag">HTML</span>
           <span class="s-tag">MATLAB</span>
-          <span class="s-tag">Linux</span>
         </span>
       </div>
       <div class="skills-row">
-        <span class="skills-label">Frameworks</span>
+        <span class="skills-label" data-en="Frameworks" data-zh="框架工具">Frameworks</span>
         <span class="skills-value">
           <span class="s-tag">PyTorch</span>
           <span class="s-tag">OpenCV</span>
@@ -743,15 +788,16 @@ a:hover { color: var(--link-hover); }
           <span class="s-tag">Blender</span>
           <span class="s-tag">Jupyter</span>
           <span class="s-tag">Git</span>
+          <span class="s-tag">Linux</span>
           <span class="s-tag">LaTeX</span>
           <span class="s-tag">Microsoft Office</span>
         </span>
       </div>
       <div class="skills-row">
-        <span class="skills-label">Languages</span>
+        <span class="skills-label" data-en="Languages" data-zh="语言能力">Languages</span>
         <span class="skills-value">
-          <span class="s-tag">Mandarin (Native)</span>
-          <span class="s-tag">English (CET-6)</span>
+          <span class="s-tag" data-en="Mandarin (Native)" data-zh="中文（母语）">Mandarin (Native)</span>
+          <span class="s-tag" data-en="English (CET-6)" data-zh="英语（CET-6）">English (CET-6)</span>
         </span>
       </div>
     </div>
@@ -759,31 +805,57 @@ a:hover { color: var(--link-hover); }
 
   <!-- Service -->
   <div class="section fade-in" id="misc">
-    <h2 class="section-heading">Service &amp; Activities</h2>
+    <h2 class="section-heading" data-en="Service &amp; Activities" data-zh="社会服务与课外活动">Service &amp; Activities</h2>
     <ul class="service-list">
-      <li class="service-item">Delegate, <strong>9th Yenching Global Symposium</strong>, Yenching Academy of Peking University, 2025</li>
-      <li class="service-item">Volunteer, <strong>15th National Games of China</strong>, 2025</li>
-      <li class="service-item">Member, competition operation team, <strong>12th National Ethnic Traditional Sports Games</strong></li>
-      <li class="service-item">Minister, Student Union, Minzu University of China, 2024</li>
-      <li class="service-item">Volunteer, China Daily outreach series &amp; Hainan Unicom Cup Lingshui Half Marathon, 2024</li>
+      <li class="service-item" data-en="Delegate, <strong>9th Yenching Global Symposium</strong>, Yenching Academy of Peking University, 2025" data-zh="代表，<strong>北京大学燕京学堂</strong>第九届全球青年中国论坛（Yenching Global Symposium），2025">Delegate, <strong>9th Yenching Global Symposium</strong>, Yenching Academy of Peking University, 2025</li>
+      <li class="service-item" data-en="Volunteer, <strong>15th National Games of China</strong>, 2025" data-zh="志愿者，<strong>第十五届全国运动会</strong>，2025">Volunteer, <strong>15th National Games of China</strong>, 2025</li>
+      <li class="service-item" data-en="Volunteer, competition operation team, <strong>12th National Ethnic Traditional Sports Games</strong>, 2024" data-zh="志愿者，<strong>第十二届全国少数民族传统体育运动会</strong>，2024">Volunteer, competition operation team, <strong>12th National Ethnic Traditional Sports Games</strong>, 2024</li>
+      <li class="service-item" data-en="Minister, Student Union, Minzu University of China, 2024" data-zh="部长，中央民族大学学生会，2024">Minister, Student Union, Minzu University of China, 2024</li>
+      <li class="service-item" data-en="Volunteer, China Daily outreach series &amp; Hainan Unicom Cup Lingshui Half Marathon, 2024" data-zh="志愿者，中国日报宣传系列活动 &amp; 海南联通杯陵水半程马拉松，2024">Volunteer, China Daily outreach series &amp; Hainan Unicom Cup Lingshui Half Marathon, 2024</li>
     </ul>
   </div>
 
 </main>
 
 <footer class="page-footer">
-  <span>&copy; 2026 Catherine Lyu. Last updated: March 2026.</span>
+  <span data-en="&copy; 2026 Catherine Lyu. Last updated: March 2026." data-zh="&copy; 2026 Catherine Lyu（吕维懿）。最后更新：2026年3月。">&copy; 2026 Catherine Lyu. Last updated: March 2026.</span>
   <span>Built for <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></span>
 </footer>
 
 <script>
-// Mobile nav
+// ── Language Toggle ──
+let currentLang = localStorage.getItem('lang') || 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+
+  // Update all elements with data-en / data-zh
+  document.querySelectorAll('[data-en][data-zh]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+
+  // Update toggle buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+// Init
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+// Apply saved language on load
+if (currentLang !== 'en') setLang(currentLang);
+
+// ── Mobile Nav ──
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.topbar-nav');
 toggle.addEventListener('click', () => nav.classList.toggle('open'));
 nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
-// Scroll reveal
+// ── Scroll Reveal ──
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -794,7 +866,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// Active nav highlight
+// ── Active Nav Highlight ──
 const sections = document.querySelectorAll('.section[id]');
 const navLinks = document.querySelectorAll('.topbar-nav a');
 window.addEventListener('scroll', () => {
